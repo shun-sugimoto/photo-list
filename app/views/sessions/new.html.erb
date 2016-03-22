@@ -1,0 +1,24 @@
+<h1>Log in</h1>
+
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <%= form_for(:session, url: login_path) do |f| %>
+          <div class="alert alert-danger">
+            <%= flash[:danger] %>
+          </div>
+          <div class="form-group">
+            <%= f.label :email , "メールアドレス"%>
+            <%= f.text_field :email, class: "form-control", placeholder: "256文字以下です。" %>
+          </div>
+          <div class="form-group">
+            <%= f.label :password , "パスワード" %>
+            <%= f.password_field :password, class: "form-control", placeholder: "特に制限はありません" %>
+          </div>
+
+          <div class="submit-group">
+            <%= f.submit "ログインする", class: "btn btn-primary btn-block" %>
+          </div>
+        <% end %>
+        <p>新規ユーザの場合、 <%= link_to "こちら", signup_path %>から会員登録をしてください。</p>
+    </div>
+</div>
