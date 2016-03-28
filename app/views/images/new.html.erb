@@ -1,0 +1,15 @@
+<div class="container">
+
+<% flash.each do |type,msg|  %>
+<div class="alert alert-danger">
+  <%= flash[:danger] %> 
+</div>
+<% end %>
+
+<%= form_tag( {action: :create}, multipart: true) do %>
+    <%= flash[:alert] %>
+    <%= file_field_tag :file %>
+    <%= submit_tag "ファイルをアップロードする" ,class:"btn btn-default" %>
+<% end %>
+
+</div>

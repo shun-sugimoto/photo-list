@@ -1,9 +1,19 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  image_path: MyString
+  user_id: 
+  google_id: MyString
   comment: MyString
+  latitude: MyString
+  longitude: MyString
+  address: MyString
+  full_address: MyString
 
 two:
-  image_path: MyString
+  user_id: 
+  google_id: MyString
   comment: MyString
+  latitude: MyString
+  longitude: MyString
+  address: MyString
+  full_address: MyString

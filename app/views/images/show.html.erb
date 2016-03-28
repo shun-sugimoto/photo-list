@@ -1,0 +1,25 @@
+<div class="container">
+    <div class="center-block">
+<%= image_tag @link ,class: "main_image"%>
+    </div>
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <th>撮影場所 </td>
+                <td>
+    <%= @show_file.full_address%>
+                </td>
+            </tr>
+    
+    <% if @show_file.comment != nil%>
+            <tr>
+                <th>コメント</td>
+                <td>
+        <%= @show_file.comment %>    
+                </td>
+            </tr>
+    <% end %>
+        </tbody>
+    </table>
+    <%= link_to "編集" ,edit_image_path, class: "btn btn-primary btn-block"%>
+</div>

@@ -1,6 +1,5 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
-
 /* universal */
 
 body {
@@ -20,3 +19,7 @@ body {
   font-weight: bold;
 }
 
+.main_image{ 
+    max-width: 100%;
+    height: auto;
+}

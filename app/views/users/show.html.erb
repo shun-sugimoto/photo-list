@@ -1,0 +1,25 @@
+<div class="container">
+<h2><%= @user.name %></h2>
+<% if @user == current_user %>
+<%= link_to "写真をアップロード" , new_image_path, class: "btn btn-primary" %>
+<hr/>
+<% end %>
+
+<% flash.each do |type,msg|  %>
+<div class="alert alert-success">
+  <%= flash[:success] %> 
+</div>
+<% end %>
+
+
+<% if @user.images.any? %>
+    <% @images.each do |image| %>
+
+        <%= image_tag @google_images.find{|item| item.id == image.google_id}.thumbnail_link %>
+        <p><%= link_to "detail" , image, method: :get%>
+        <p><%= link_to "delete" , image , method: :delete, data: { confirm: "You sure?" } %>
+        
+        <hr/>
+    <% end %>
+<% end %>
+</div>

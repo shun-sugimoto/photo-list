@@ -13,3 +13,7 @@
  *= require common
  *= require_self
  */
+ 
+html { height: 100% }
+body { height: 100%; margin: 0; padding-top: 60px }
+#map { height: 100% }

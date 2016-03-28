@@ -49,3 +49,7 @@ group :development do
   gem 'spring'
 end
 
+gem 'google_drive'
+gem 'pry-byebug'
+gem 'exifr'
+gem 'geocoder'
