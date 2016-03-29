@@ -35,19 +35,18 @@ class ImagesController < ApplicationController
     end
 
     def show
-      
       @show_file = Image.find_by(id: params[:id])
-      if @show_file.user_id != current_user.id
+    end
+    
+    
+    def get_image
+      file = Image.find_by(id: params[:id])       
+      if file.user_id != current_user.id
         redirect_to current_user
       end
       
-      @google_image = find_file(@show_file)
-      begin
-        google_auth_session.request(:get,@google_image.web_content_link)
-      rescue => e
-        @error = e.message
-      end
-      @link = @error.split("HREF=\"""")[1].split("?e=download")[0]<<"?e=view"
+      file = download_file(file)
+      send_data file, type: "image/jpg", disposition: :inline  
     end
     
     def edit
@@ -61,7 +60,6 @@ class ImagesController < ApplicationController
       
         redirect_to @update_file
       else
-      
         render 'edit'
       end
     end
@@ -71,7 +69,7 @@ class ImagesController < ApplicationController
       @delete_file = Image.find_by(id: params[:id])
       
       #Googleドライブから削除
-      @google_file= delete_file(@delete_file)
+      delete_file(@delete_file)
       
       flash[:success] = "Image Deleted" 
       redirect_to current_user

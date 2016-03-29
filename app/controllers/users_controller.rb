@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
     include ImagesHelper
-    before_action :logged_in_user
+    before_action :logged_in_user, only: [:show, :edit]
 
   def new
     @user = User.new
@@ -10,7 +10,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       session[:user_id] = @user.id
-      flash[:info] = "ようこそ! #{@user.name}"
+      flash[:success] = "ようこそ! #{@user.name}"
       redirect_to @user
     else
       flash.now[:alert] = "新規会員登録に失敗しました"
@@ -22,6 +22,20 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @images = @user.list_items
     @google_images = file_list
+  end
+  
+  def edit
+    @user = User.find(params[:id])
+  end
+  
+  def update
+    @user = User.find(params[:id])
+    if @user.update(user_params)
+    
+      redirect_to @user
+    else
+      render 'edit'
+    end
   end
   
   private

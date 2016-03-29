@@ -9,11 +9,8 @@ module ImagesHelper
         auth.client_secret = ENV["CLIENT_SECRET"] # 「クライアントシークレット」の文字列
         auth.refresh_token = ENV["REFRESH_TOKEN"]
         auth.fetch_access_token!
-        
+
         @session = GoogleDrive.login_with_oauth(client)
-        file = @session.file_by_id("0B5k2OQullx5mNzVScWZWZ2o3TVk")
-        @file = file.download_to_file("/tmp/example.jpeg")
-        binding pry
     end
     
     # ファイル一覧を取得
@@ -28,14 +25,21 @@ module ImagesHelper
     
     # google_idから画像を特定する
     def find_file(file)
-        @file = google_auth_session.file_by_id(@show_file.google_id)
+        @file = google_auth_session.file_by_id(file.google_id)
     end
     
     # google_idから画像を特定し、画像を削除する。
     def delete_file(file)
-        @google_file= find_file(file)
-        @google_file.delete(true)
+        file= find_file(file)
+        file.delete(true)
     end
+    
+    # 画像をStringでダウンロードする
+    def download_file(file)
+        file = find_file(file)
+        @file_string = file.download_to_string()
+    end
+    
     
     # 画像のメタ情報を取得
     def image_meta(file)
