@@ -1,6 +1,5 @@
 <div class="container">
     <div class="center-block">
-    <%= @show_file.id %>
     <%= image_tag  url_for(:controller => 'images',:action=>'get_image', :id=> @show_file.id), class: "main_image"%>
     </div>
     <table class="table table-striped">
@@ -23,6 +22,6 @@
         </tbody>
     </table>
 
-    <p><%= link_to "delete" , image , method: :delete, data: { confirm: "You sure?" } %>
-    <%= link_to "編集" ,edit_image_path, class: "btn btn-primary btn-block"%>
+    <p><%= link_to "削除" , @show_file , method: :delete, data: { confirm: "You sure?" } %></p>
+    <p><%= link_to "編集" ,edit_image_path %></p>
 </div>

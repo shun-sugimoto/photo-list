@@ -9,23 +9,30 @@ class ImagesController < ApplicationController
         file = params[:file]
         if  (file != nil) &&  (file.content_type == "image/jpeg" || file.content_type =="image/jpg")
           
-          image_meta = image_meta(file)
+          
+          exif = EXIFR::JPEG.new(file.tempfile)
+          if is_exif?(exif)
+            image_meta = image_meta(exif)
+          else
+            flash[:danger] = "必要なexif情報がありません。緯度経度、撮影日時を入力してください"
+            redirect_to action: 'new' and return
+          end
           uploadfile = upload_file(file)
 
-          @image = Image.new          
+          @image = Image.new
           @image.attributes ={  user_id:      current_user.id,
                                 google_id:    uploadfile.id,
                                 latitude:     image_meta[:latitude] ,
                                 longitude:    image_meta[:longitude], 
                                 address:      image_meta[:address], 
                                 full_address: image_meta[:full_address]}
-
+          
           if @image.save
-            flash.now[:success] = "画像を登録しました"
+            flash[:danger] = "画像を登録しました"
             redirect_to current_user
           else 
             @google_file= google_auth_session.file_by_id(@image[:id])
-            flash.now[:alert] = "登録に失敗しました"
+            flash[:danger] = "登録に失敗しました"
             redirect_to :action =>"new"
           end
         else

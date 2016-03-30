@@ -40,20 +40,21 @@ module ImagesHelper
         @file_string = file.download_to_string()
     end
     
-    
+    # TODO exif情報のnilチェック
+    def is_exif?(exif)
+        exif.date_time_original!= nil or exif.gps_latitude != nil or exif.gps_longitude != nil
+    end
+
     # 画像のメタ情報を取得
-    def image_meta(file)
-        # exifの取得
-        exif = EXIFR::JPEG.new(file.tempfile)
-         
+    def image_meta(exif)
         # 撮影日
         exif.date_time_original
          
-        # 緯度
-        latitude = (exif.gps_latitude[0].to_f + (exif.gps_latitude[1].to_f)/60 + (exif.gps_latitude[2].to_f)/3600).to_s
-         
-        # 軽度
-        longitude = (exif.gps_longitude[0].to_f + (exif.gps_longitude[1].to_f)/60 + (exif.gps_longitude[2].to_f)/3600).to_s
+        # 緯度、軽度
+        if exif.gps_latitude != nil or exif.gps_longitude != nil
+            latitude = (exif.gps_latitude[0].to_f + (exif.gps_latitude[1].to_f)/60 + (exif.gps_latitude[2].to_f)/3600).to_s
+            longitude = (exif.gps_longitude[0].to_f + (exif.gps_longitude[1].to_f)/60 + (exif.gps_longitude[2].to_f)/3600).to_s
+        end
          
         # 緯度軽度の結合
         location = [latitude,longitude].join(",")
