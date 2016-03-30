@@ -14,7 +14,7 @@
 
 <% if @user.images.any? %>
     <% @images.each do |image| %>
-    <%= link_to  image_tag(@google_images.find{|item| item.id == image.google_id}.thumbnail_link), image,class: "thumbnail_image"%>
+      <%= link_to  image_tag(@google_images.find{|item| item.id == image.google_id}.thumbnail_link), image,class: "thumbnail_image"%>
     <% end %>
 <% end %>
 </div>

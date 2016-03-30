@@ -28,7 +28,7 @@ class ImagesController < ApplicationController
                                 full_address: image_meta[:full_address]}
           
           if @image.save
-            flash[:danger] = "画像を登録しました"
+            flash[:success] = "画像を登録しました"
             redirect_to current_user
           else 
             @google_file= google_auth_session.file_by_id(@image[:id])
@@ -78,7 +78,8 @@ class ImagesController < ApplicationController
       #Googleドライブから削除
       delete_file(@delete_file)
       
-      flash[:success] = "Image Deleted" 
+      @drive_file.destroy
+      flash[:success] = "Image Deleted"
       redirect_to current_user
     end
 end
